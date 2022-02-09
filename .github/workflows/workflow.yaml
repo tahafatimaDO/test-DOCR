@@ -20,4 +20,9 @@ jobs:
                       "repository": "registry.digitalocean.com/taha/taha",
                       "tag": "latest"
                     },
+                    {
+                      "name": "taha-1",
+                      "repository": "registry.digitalocean.com/taha/taha",
+                      "tag": "1"
+                    },
                   ]'
