@@ -18,11 +18,11 @@ jobs:
                     {
                       "name": "taha",
                       "repository": "registry.digitalocean.com/taha/taha",
-                      "tag": "latest"
+                      "tag": "1"
                     },
                     {
                       "name": "taha-1",
                       "repository": "registry.digitalocean.com/taha/taha",
-                      "tag": "2"
+                      "tag": "1"
                     },
                   ]'
