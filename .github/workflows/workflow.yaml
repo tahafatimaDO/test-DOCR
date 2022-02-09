@@ -2,6 +2,7 @@ name: DigitalOcean App Platform deployment
 on: [push]
 jobs:
   check-bats-version:
+    runs-on: ubuntu-latest
     steps:
       - uses: digitalocean/app_action@main
         with:
