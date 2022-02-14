@@ -26,7 +26,7 @@ function App() {
           {process.env.REACT_APP_API_PASS}
         </p>
         <p>
-          {process.env.REACT_APP_PORT}
+          {process.env.REACT_APP_API_NAME}
         </p>
       </header>
     </div>
