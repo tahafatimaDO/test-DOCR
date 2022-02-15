@@ -66,15 +66,15 @@ jobs:
          app_name: taha
          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
          
-      - name: DigitalOcean App Platform deployment
-        uses: digitalocean/app_action@main
-        with:
-          app_name: taha
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          images: '[
-                    {
-                      "name": "taha",
-                      "repository": "registry.digitalocean.com/taha/taha",
-                      "tag": "13"
-                    }
-                  ]'
+    - name: DigitalOcean App Platform deployment
+      uses: digitalocean/app_action@main
+      with:
+        app_name: taha
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        images: '[
+                  {
+                    "name": "taha",
+                    "repository": "registry.digitalocean.com/taha/taha",
+                    "tag": "13"
+                  }
+                ]'
