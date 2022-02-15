@@ -1,81 +1,23 @@
-name: Build, push, and deploy
-
-on:
-  # Triggers the workflow on push request on the main branch for changes in the specified paths.
-  push:
-    branches:
-      - master
-    paths:
-      - '**'
-      - 'src/**'
-      - 'public/**'
-      - 'package.json'
-      - 'Dockerfile'
-      - '.github/workflows/**'
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel.
+name: DigitalOcean App Platform deployment
+on: [push]
 jobs:
-  # This workflow contains a single job called "build".
-  build:
-    # The type of runner that the job will run on.
+  check-bats-version:
     runs-on: ubuntu-latest
-    
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it.
-    - name: Checkout master
-      uses: actions/checkout@main
-
-    # Install doctl.
-    - name: Install doctl
-      uses: digitalocean/action-doctl@v2
-      with:
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-    
-    # Save $GITHUB_SHA truncated varian as a ENV variable
-    - name: Truncate $GITHUB_SHA and make a docker tag out of it
-      run: echo "TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
-
-    # Verify $TAG as an ENV variable
-    - name: Print $TAG 
-      run: echo ${{ env.TAG }}
-
-    # Build a Docker image of your application in your registry and tag the image with the $GITHUB_SHA.
-    - name: Build container image
-      run: docker build -t registry.digitalocean.com/taha/taha:${{ env.TAG }} .
-
-    # Login to DO container registry
-    - name: Log in to DigitalOcean Container Registry with short-lived credentials
-      run: doctl registry login --expiry-seconds 1200
-
-    # Push the image we built to DO container registry
-    - name: Push image to DigitalOcean Container Registry
-      run: docker push registry.digitalocean.com/taha/taha:${{ env.TAG }
-
-    # Push the image we built to DO container registry
-    # - name: No Idea what this does or why this is here
-    # - uses: digitalocean/app_action@main
-    #   with:
-    #     app_name: plm-frontend-container-test
-    #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
-    # Redeploy the app using the latest container we built
-    - name: DigitalOcean App Platform deployment
-      uses: digitalocean/app_action@main
-      with:
+      - uses: digitalocean/app_action@main
+        with:
          app_name: taha
          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
          
-    - name: DigitalOcean App Platform deployment
-      uses: digitalocean/app_action@main
-      with:
-        app_name: taha
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-        images: '[
-                  {
-                    "name": "taha",
-                    "repository": "registry.digitalocean.com/taha/taha",
-                    "tag": "13"
-                  }
-                ]'
+      - name: DigitalOcean App Platform deployment
+        uses: digitalocean/app_action@main
+        with:
+          app_name: taha
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          images: '[
+                    {
+                      "name": "taha",
+                      "repository": "registry.digitalocean.com/taha/taha",
+                      "tag": "11"
+                    }
+                  ]'
