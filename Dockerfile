@@ -8,7 +8,7 @@ RUN npm install --silent
 COPY . /app
 RUN npm run build
 
-# stage 2 - build the final image and copy the react build files
+# stage 2 - build the final image and copy the react build file
 FROM nginx:1.21.6-alpine
 ENV PATH /app/node_modules/.bin:$PATH
 COPY --from=build /app/build /usr/share/nginx/html
