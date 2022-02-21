@@ -45,43 +45,13 @@ jobs:
     - name: Print $TAG 
       run: echo ${{ env.TAG }}
       
-   # - name: Print $REACT_APP_TEST_DIRECT
-   #   run: echo ${{ secrets.REACT_APP_TEST_DIRECT }}
+    - name: Print String
+      run: echo "hello world"
       
-    # Login to DO container registry
-    - name: Log in to DigitalOcean Container Registry with short-lived credentials
-      run: doctl registry login --expiry-seconds 1200
+    - name: Print Env Variable
+      env:
+          TEST: 'foo'
+      run: echo '${TEST}'
       
-    - name: Build and Push to DigitalOcean Container Registry
-      uses: docker/build-push-action@v2
-      with:
-       push: true
-       tags: registry.digitalocean.com/taha/taha:${{ env.TAG }} 
-       #build-args: |
-       # REACT_APP_TEST_DIRECT=${{ secrets.REACT_APP_TEST_DIRECT }}
-       # REACT_APP_DIRECT_PASS=${{ secrets.REACT_APP_TEST_PASS }}
-  #  # Build a Docker image of your application in your registry and tag the image with the $GITHUB_SHA.
-   # - name: Build container image
-   #   run: docker build  --build-arg=REACT_APP_TEST_DIRECT=${{ secrets.REACT_APP_TEST_DIRECT }}  --build-arg=REACT_APP_TEST_PASS=pass -t ${{ secrets.REGISTRY_NAME }}/taha:${{ env.TAG }} .
-
-    # Login to DO container registry
-#    - name: Log in to DigitalOcean Container Registry with short-lived credentials
-#      run: doctl registry login --expiry-seconds 1200
-
-    # Push the image we built to DO container registry
- #   - name: Push image to DigitalOcean Container Registry
-  #    run: docker push ${{ secrets.REGISTRY_NAME }}/taha:${{ env.TAG }}
-
-    # Redeploy the app using the latest container we built
-    - name: DigitalOcean App Platform deployment
-      uses: digitalocean/app_action@main
-      with:
-        app_name: taha
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-        images: '[
-                  {
-                    "name": "taha",
-                    "repository": "registry.digitalocean.com/taha/taha",
-                    "tag": "${{ env.TAG }}"
-                  }
-                ]'
+    
+ 
