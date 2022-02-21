@@ -48,7 +48,7 @@ jobs:
     # Build a Docker image of your application in your registry and tag the image with the $GITHUB_SHA.
     - name: Build container image
       env:
-          TEST: foo
+          TEST: ${{ secrets.REACT_APP_TEST_DIRECT }}
       run: docker build --build-args REACT_APP_TEST_DIRECT=${TEST} -t registry.digitalocean.com/taha/taha:${{ env.TAG }} .
 
     # Login to DO container registry
